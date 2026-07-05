@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ===== LOGIN SCREEN ===== */
+        .login-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-screen h1 { font-size: 48px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(59,130,246,0.6); }
+        .login-screen .subtitle { font-size: 20px; color: rgba(255,255,255,0.7); margin-bottom: 40px; }
+        .login-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-card label {
+            display: block;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .login-card input, .login-card select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .login-card input:focus, .login-card select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59,130,246,0.3);
+        }
+        .login-card select option { background: #1a1a2e; color: white; }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 14px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .btn-primary { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; width: 100%; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 8px 16px; font-size: 13px; }
+        .btn-small { padding: 8px 16px; font-size: 13px; border-radius: 10px; }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard { min-height: 100vh; padding: 30px 20px; }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .avatar-display {
+            font-size: 100px;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 60px rgba(59,130,246,0.3);
+        }
+        .avatar-display:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 0 80px rgba(59,130,246,0.5);
+        }
+        .avatar-picker {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20,20,40,0.97);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 25px;
+            z-index: 1000;
+            width: 320px;
+        }
+        .avatar-picker.active { display: block; }
+        .avatar-picker .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .avatar-picker .grid div {
+            font-size: 36px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+        .avatar-picker .grid div:hover {
+            background: rgba(59,130,246,0.2);
+            transform: scale(1.15);
+        }
+        .avatar-picker .grid div.selected {
+            background: rgba(59,130,246,0.3);
+            border: 2px solid rgba(59,130,246,0.6);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+
+        .student-name {
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(59,130,246,0.6);
+            margin-bottom: 8px;
+        }
+        .student-info { font-size: 14px; color: rgba(255,255,255,0.6); }
+
+        /* ===== NAVIGATION CARDS ===== */
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto 40px;
+        }
+        .nav-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 35px 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .nav-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .nav-card .icon { font-size: 56px; margin-bottom: 16px; }
+        .nav-card h3 { font-size: 22px; margin-bottom: 10px; }
+        .nav-card p { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 16px; }
+        .nav-card .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .nav-card .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* ===== SUBJECT PAGE ===== */
+        .subject-page { min-height: 100vh; padding: 30px 20px; }
+        .subject-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .subject-header h1 { font-size: 42px; margin-bottom: 12px; }
+
+        /* Points Meter */
+        .points-meter {
+            max-width: 900px;
+            margin: 0 auto 35px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 24px;
+            padding: 35px;
+        }
+        .points-meter .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .points-meter .total-points {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .points-meter .progress-track {
+            position: relative;
+            width: 100%;
+            height: 45px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .points-meter .progress-fill {
+            position: absolute;
+            left: 0; top: 0;
+            height: 100%;
+            border-radius: 25px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 14px;
+            font-weight: 700;
+            font-size: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .points-breakdown {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
+        }
+        .points-breakdown .item {
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+        }
+        .points-breakdown .item .label { font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+        .points-breakdown .item .value { font-size: 20px; font-weight: 700; }
+        .encouragement { margin-top: 18px; text-align: center; font-size: 18px; font-weight: 600; }
+
+        /* Bar Charts Grid */
+        .charts-grid {
+            max-width: 1300px;
+            margin: 0 auto 35px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+        }
+        .chart-card {
+            backdrop-filter: blur(30px);
+            border-radius: 24px;
+            padding: 28px;
+        }
+        .chart-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 22px; text-align: center; }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 10px;
+            height: 200px;
+            padding: 0 8px;
+            overflow-x: auto;
+        }
+        .chart-bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 48px;
+            max-width: 65px;
+        }
+        .chart-bar-item .score-label { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+        .chart-bar-item .bar {
+            width: 100%;
+            border-radius: 6px 6px 3px 3px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .chart-bar-item .bar .pts {
+            position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.7); color: #fbbf24;
+            padding: 1px 5px; border-radius: 6px; font-size: 9px; font-weight: 700; white-space: nowrap;
+        }
+        .chart-bar-item .name-label { font-size: 9px; color: rgba(255,255,255,0.7); margin-top: 5px; text-align: center; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chart-bar-item .date-label { font-size: 8px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+        .chart-summary {
+            margin-top: 18px;
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .chart-summary .stat-label { font-size: 10px; color: rgba(255,255,255,0.6); margin-bottom: 3px; }
+        .chart-summary .stat-value { font-size: 16px; font-weight: 700; }
+        .no-data { text-align: center; padding: 30px 0; color: rgba(255,255,255,0.5); }
+
+        /* Grades Table */
+        .grades-table-container {
+            max-width: 900px;
+            margin: 0 auto 35px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px;
+            padding: 25px;
+            overflow-x: auto;
+        }
+        .grades-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .grades-table th {
+            padding: 12px 8px;
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        .grades-table th:first-child { text-align: left; }
+        .grades-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .grades-table td:first-child { text-align: left; color: white; }
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .action-btns { display: flex; gap: 6px; justify-content: center; }
+        .action-btns button {
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .action-btns .edit-btn { background: rgba(59,130,246,0.3); color: #93c5fd; }
+        .action-btns .edit-btn:hover { background: rgba(59,130,246,0.5); }
+        .action-btns .del-btn { background: rgba(239,68,68,0.3); color: #fca5a5; }
+        .action-btns .del-btn:hover { background: rgba(239,68,68,0.5); }
+
+        /* Add Assessment Form */
+        .add-form-container {
+            max-width: 600px;
+            margin: 0 auto 35px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        .add-form-container h3 { font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .form-row { margin-bottom: 16px; }
+        .form-row label { display: block; font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 6px; font-weight: 600; }
+        .form-row input, .form-row select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+        .form-row input:focus, .form-row select:focus { border-color: #3b82f6; }
+        .form-row select option { background: #1a1a2e; }
+        .form-actions { display: flex; gap: 12px; margin-top: 20px; }
+        .form-actions .btn { flex: 1; }
+
+        /* Points Legend */
+        .points-legend {
+            max-width: 700px;
+            margin: 0 auto 35px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px;
+            padding: 25px;
+        }
+        .points-legend h3 { font-size: 18px; margin-bottom: 15px; text-align: center; }
+        .points-legend .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            text-align: center;
+        }
+        .points-legend .grid .item { padding: 10px; border-radius: 10px; }
+        .points-legend .grid .item .range { font-size: 16px; font-weight: 700; }
+        .points-legend .grid .item .pts { font-size: 12px; color: rgba(255,255,255,0.7); }
+        .points-legend .note { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,0.6); text-align: center; }
+
+        /* Save/Load Bar */
+        .save-load-bar {
+            max-width: 900px;
+            margin: 0 auto 35px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .save-load-bar .btn { min-width: 160px; }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            z-index: 2000;
+            transition: transform 0.4s ease;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.error { background: #ef4444; }
+
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-down { animation: fadeInDown 0.6s ease-out; }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .login-screen h1 { font-size: 32px; }
+            .student-name { font-size: 28px; }
+            .avatar-display { font-size: 70px; width: 110px; height: 110px; }
+            .subject-header h1 { font-size: 30px; }
+            .points-meter .total-points { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Overlay for modals -->
+<div class="overlay" id="overlay" onclick="closeAvatarPicker(); closeUploadReminder();"></div>
+
+<!-- Avatar Picker -->
+<div class="avatar-picker" id="avatarPicker">
+    <h4 style="text-align:center;margin-bottom:15px;">Choose Your Avatar</h4>
+    <div class="grid" id="avatarGrid"></div>
+    <button class="btn btn-secondary" style="width:100%;margin-top:15px;" onclick="closeAvatarPicker()">Close</button>
+</div>
+
+<!-- Upload Reminder Modal -->
+<div id="uploadReminder" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:rgba(20,20,40,0.97);backdrop-filter:blur(20px);border:2px solid rgba(16,185,129,0.4);border-radius:24px;padding:40px;max-width:480px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeInUp 0.3s ease-out;">
+        <div style="font-size:64px;margin-bottom:20px;">✅</div>
+        <h2 style="font-size:24px;margin-bottom:12px;color:#10b981;">File Saved!</h2>
+        <p style="font-size:16px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:25px;">
+            Your progress file has been downloaded to your computer.
+        </p>
+        <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:16px;padding:20px;margin-bottom:25px;text-align:left;">
+            <h3 style="font-size:16px;color:#60a5fa;margin-bottom:12px;">📋 Don't forget! Upload your file to Teams:</h3>
+            <ol style="font-size:14px;color:rgba(255,255,255,0.8);line-height:2;margin-left:20px;">
+                <li>Open <strong>Microsoft Teams</strong></li>
+                <li>Go to your class channel</li>
+                <li>Click the <strong>"Files"</strong> tab</li>
+                <li>Click <strong>"Upload"</strong> and select your saved file</li>
+            </ol>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">
+            Your teacher needs your uploaded file to see your progress!
+        </p>
+        <button class="btn btn-primary" onclick="closeUploadReminder()" style="width:100%;">👍 Got It!</button>
+    </div>
+</div>
+
+<!-- ===== SCREENS ===== -->
+<div id="loginScreen" class="login-screen">
+    <div style="font-size:80px;margin-bottom:20px;">🎓</div>
+    <h1>Student Progress Dashboard</h1>
+    <p class="subtitle">Track your learning journey!</p>
+    <div class="login-card fade-in-up">
+        <p style="font-size:16px;color:rgba(255,255,255,0.8);margin-bottom:20px;text-align:center;">👋 Welcome! What's your name?</p>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" placeholder="Enter your first name" autofocus>
+        <label for="lastName">Last Name (optional)</label>
+        <input type="text" id="lastName" placeholder="Enter your last name">
+        <button class="btn btn-primary" id="loginBtn">🚀 Let's Go!</button>
+        <p id="loginError" style="color:#ef4444;text-align:center;margin-top:10px;display:none;"></p>
+        <script>
+        // Attach click handler immediately so it always works
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            try {
+                var first = document.getElementById("firstName").value.trim();
+                var last = document.getElementById("lastName").value.trim();
+                var errEl = document.getElementById("loginError");
+                if (!first) {
+                    errEl.textContent = "Please enter your first name";
+                    errEl.style.display = "block";
+                    return;
+                }
+                errEl.style.display = "none";
+                // Save to localStorage
+                var data = localStorage.getItem("student-progress-data");
+                var st;
+                try { st = data ? JSON.parse(data) : null; } catch(e) { st = null; }
+                if (!st) st = { student: null, data: { math: [], reading: [], science: [] } };
+                st.student = { firstName: first, lastName: last, avatar: "\uD83E\uDD8A" };
+                localStorage.setItem("student-progress-data", JSON.stringify(st));
+                // Update the global state variable so showDashboard can read it
+                if (typeof state !== "undefined") {
+                    state.student = st.student;
+                    state.data = st.data;
+                }
+                // Hide login, show dashboard
+                document.getElementById("loginScreen").style.display = "none";
+                document.getElementById("dashboardScreen").style.display = "";
+                // Try calling showDashboard if available
+                if (typeof showDashboard === "function") showDashboard();
+            } catch(e) {
+                alert("Button error: " + e.message);
+            }
+        });
+        // Enter key support
+        document.getElementById("firstName").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") document.getElementById("loginBtn").click();
+        });
+        document.getElementById("lastName").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") document.getElementById("loginBtn").click();
+        });
+        </script>
+        <div style="text-align:center;margin-top:20px;">
+            <label for="loadFileInput" class="btn btn-secondary btn-small" style="cursor:pointer;">📂 Load My Saved Data</label>
+            <input type="file" id="loadFileInput" accept=".json" style="display:none;" onchange="loadFromFile(event)">
+        </div>
+    </div>
+</div>
+
+<div id="dashboardScreen" class="dashboard" style="display:none;">
+    <div class="dashboard-header fade-in-down">
+        <div class="avatar-display" id="avatarDisplay" onclick="openAvatarPicker()">🦊</div>
+        <h1 class="student-name" id="studentNameDisplay">Student</h1>
+        <div class="student-info" id="studentInfoDisplay"></div>
+        <p style="font-size:18px;color:rgba(255,255,255,0.7);margin-top:12px;">🌟 Track your progress and reach your learning goals</p>
+    </div>
+
+    <!-- Save/Load Bar -->
+    <div class="save-load-bar">
+        <button class="btn btn-success" onclick="saveToFile()">💾 Save My Progress</button>
+        <label for="loadFileInput2" class="btn btn-secondary" style="cursor:pointer;">📂 Load Saved File</label>
+        <input type="file" id="loadFileInput2" accept=".json" style="display:none;" onchange="loadFromFile(event)">
+        <button class="btn btn-secondary" onclick="changeName()">✏️ Change Name</button>
+    </div>
+
+    <div class="nav-cards" id="navCards"></div>
+</div>
+
+<div id="subjectScreen" class="subject-page" style="display:none;"></div>
+
+<script>
+// ========================
+// DATA & STATE
+// ========================
+const AVATARS = ["🦊","🐻","🐼","🐨","🦁","🐯","🐸","🐵","🦉","🦄","🐲","🦖","🚀","⭐","🌈","🎨"];
+const STORAGE_KEY = "student-progress-data";
+
+let state = {
+    student: null, // { firstName, lastName, classCode, avatar }
+    data: { math: [], reading: [], science: [] },
+};
+
+// ========================
+// POINTS CALCULATOR
+// ========================
+function calcPointsFromPercentage(pct) {
+    if (pct === 100) return 15;
+    if (pct >= 90) return 9;
+    if (pct >= 80) return 7;
+    if (pct >= 70) return 5;
+    return 0;
+}
+
+function calcFastPmPoints(score, subject) {
+    const benchmarks = {
+        math: { proficient: 497, approaching: 473 },
+        reading: { proficient: 520, approaching: 497 },
+        science: { proficient: 500, approaching: 480 },
+    };
+    const b = benchmarks[subject] || benchmarks.math;
+    if (score >= b.proficient) return 20;
+    if (score >= b.approaching) return 12;
+    if (score >= b.approaching - 30) return 7;
+    return 3;
+}
+
+function calcGrowthBonus(current, previous) {
+    const growth = current - previous;
+    if (growth >= 15) return 10;
+    if (growth >= 10) return 6;
+    if (growth >= 5) return 3;
+    return 0;
+}
+
+function calcSubjectPoints(assessments, subject) {
+    let quizPts = 0, unitTestPts = 0, fastPmPts = 0, starPts = 0;
+    const sorted = [...assessments].sort((a, b) => new Date(a.date_given) - new Date(b.date_given));
+    let prevFast = null;
+    sorted.forEach(a => {
+        const pct = (a.score / a.max_score) * 100;
+        const isScale = a.assessment_type === "FAST Progress Monitoring" || a.assessment_type === "STAR";
+        let pts = 0;
+        if (isScale) {
+            pts = calcFastPmPoints(a.score, subject);
+            if (prevFast !== null) pts += calcGrowthBonus(a.score, prevFast);
+            prevFast = a.score;
+            if (a.assessment_type === "FAST Progress Monitoring") fastPmPts += pts;
+            else starPts += pts;
+        } else {
+            pts = calcPointsFromPercentage(pct);
+            if (a.assessment_type === "Quiz") quizPts += pts;
+            else unitTestPts += pts;
+        }
+    });
+    return { total: quizPts + unitTestPts + fastPmPts + starPts, max: 500, quizPts, unitTestPts, fastPmPts, starPts };
+}
+
+function getPointsColor(pts) {
+    const pct = (pts / 500) * 100;
+    if (pct >= 80) return "#10b981";
+    if (pct >= 60) return "#3b82f6";
+    if (pct >= 40) return "#f59e0b";
+    return "#ec4899";
+}
+
+function getEncouragement(pts) {
+    const pct = (pts / 500) * 100;
+    if (pct >= 80) return "🌟 Outstanding! You're a superstar!";
+    if (pct >= 60) return "🚀 Amazing progress! Keep reaching for the stars!";
+    if (pct >= 40) return "💪 Great job! Every point counts!";
+    if (pct >= 20) return "🌱 You're growing! Keep up the good work!";
+    return "🎯 You've got this! Every assessment is a chance to earn more points!";
+}
+
+function getBarColor(pct) {
+    if (pct === 100) return "#10b981";
+    if (pct >= 90) return "#22c55e";
+    if (pct >= 80) return "#3b82f6";
+    if (pct >= 70) return "#f59e0b";
+    return "#ef4444";
+}
+
+// ========================
+// PERSISTENCE
+// ========================
+function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+        try { state = JSON.parse(raw); return true; }
+        catch (e) { return false; }
+    }
+    return false;
+}
+
+function saveToFile() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    var name = state.student
+        ? "progress-" + state.student.firstName + (state.student.lastName ? "-" + state.student.lastName : "") + ".json"
+        : "student-progress.json";
+    a.href = url;
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(url);
+    showUploadReminder();
+}
+
+function showUploadReminder() {
+    var modal = document.getElementById("uploadReminder");
+    modal.style.display = "flex";
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeUploadReminder() {
+    document.getElementById("uploadReminder").style.display = "none";
+    document.getElementById("overlay").classList.remove("active");
+}
+
+function loadFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            const loaded = JSON.parse(e.target.result);
+            if (loaded.student && loaded.data) {
+                state = loaded;
+                saveState();
+                showToast("✅ Data loaded successfully!");
+                showDashboard();
+            } else {
+                showToast("❌ Invalid file format", true);
+            }
+        } catch (err) {
+            showToast("❌ Could not read file", true);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = ""; // reset so same file can be loaded again
+}
+
+// ========================
+// TOAST
+// ========================
+function showToast(msg, isError) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show" + (isError ? " error" : "");
+    setTimeout(() => t.className = "toast", 3000);
+}
+
+// ========================
+// LOGIN / LOGOUT
+// ========================
+function handleLogin() {
+    try {
+        var firstName = document.getElementById("firstName").value.trim();
+        var lastName = document.getElementById("lastName").value.trim();
+        
+        var errEl = document.getElementById("loginError");
+        
+        if (!firstName) {
+            errEl.textContent = "Please enter your first name";
+            errEl.style.display = "block";
+            return;
+        }
+        errEl.style.display = "none";
+
+        state.student = { firstName: firstName, lastName: lastName, avatar: "🦊" };
+        if (!state.data) state.data = { math: [], reading: [], science: [] };
+        saveState();
+        showDashboard();
+    } catch (err) {
+        alert("Error: " + err.message);
+    }
+}
+
+function changeName() {
+    var newFirst = prompt("Enter your first name:", state.student ? state.student.firstName : "");
+    if (newFirst === null || newFirst.trim() === "") return;
+    var newLast = prompt("Last name (optional):", state.student ? state.student.lastName : "");
+    if (newLast === null) newLast = "";
+    state.student.firstName = newFirst.trim();
+    state.student.lastName = newLast.trim();
+    saveState();
+    renderDashboardHeader();
+    showToast("✅ Name updated!");
+}
+
+// ========================
+// AVATAR
+// ========================
+function openAvatarPicker() {
+    const grid = document.getElementById("avatarGrid");
+    grid.innerHTML = "";
+    AVATARS.forEach(av => {
+        const d = document.createElement("div");
+        d.textContent = av;
+        if (state.student && state.student.avatar === av) d.classList.add("selected");
+        d.onclick = () => { state.student.avatar = av; saveState(); closeAvatarPicker(); renderDashboardHeader(); };
+        grid.appendChild(d);
+    });
+    document.getElementById("avatarPicker").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeAvatarPicker() {
+    document.getElementById("avatarPicker").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+// ========================
+// DASHBOARD
+// ========================
+function showDashboard() {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("subjectScreen").style.display = "none";
+    document.getElementById("dashboardScreen").style.display = "";
+    renderDashboardHeader();
+    renderNavCards();
+}
+
+function renderDashboardHeader() {
+    const s = state.student;
+    document.getElementById("avatarDisplay").textContent = s.avatar || "🦊";
+    document.getElementById("studentNameDisplay").textContent =
+        s.firstName + (s.lastName ? " " + s.lastName.substring(0, 3) : "");
+    document.getElementById("studentInfoDisplay").innerHTML = "";
+}
+
+function renderNavCards() {
+    const subjects = [
+        { key: "math", title: "Math Assessments", desc: "Add your math scores and track progress", icon: "🔢", color: "#3b82f6" },
+        { key: "reading", title: "Reading Assessments", desc: "Track your reading achievements", icon: "📚", color: "#ec4899" },
+        { key: "science", title: "Science Assessments", desc: "Explore your science discoveries", icon: "🔬", color: "#10b981" },
+    ];
+    const container = document.getElementById("navCards");
+    container.innerHTML = "";
+    subjects.forEach((sub, i) => {
+        const pts = calcSubjectPoints(state.data[sub.key] || [], sub.key);
+        const pct = Math.min((pts.total / pts.max) * 100, 100);
+        const card = document.createElement("div");
+        card.className = "nav-card fade-in-up";
+        card.style.animationDelay = `${i * 0.1}s`;
+        card.onclick = () => showSubjectPage(sub.key);
+        card.onmouseenter = function () {
+            this.style.borderColor = sub.color + "80";
+            this.style.boxShadow = `0 20px 60px ${sub.color}40`;
+        };
+        card.onmouseleave = function () {
+            this.style.borderColor = "rgba(255,255,255,0.1)";
+            this.style.boxShadow = "0 8px 32px rgba(0,0,0,0.3)";
+        };
+        card.innerHTML = `
+            <div class="icon">${sub.icon}</div>
+            <h3>${sub.title}</h3>
+            <p>${sub.desc}</p>
+            <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px;">
+                <span>${pts.total} pts</span>
+                <span style="color:${sub.color}">/ 500</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${sub.color}80,${sub.color});box-shadow:0 0 10px ${sub.color};"></div>
+            </div>
+            <div style="margin-top:16px;font-size:22px;color:rgba(255,255,255,0.5);">→</div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// ========================
+// SUBJECT PAGE
+// ========================
+function showSubjectPage(subject) {
+    document.getElementById("dashboardScreen").style.display = "none";
+    document.getElementById("subjectScreen").style.display = "";
+    renderSubjectPage(subject);
+}
+
+function renderSubjectPage(subject) {
+    const config = {
+        math: { title: "🔢 Math Progress", bg: "linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3))", colors: { quiz: "#3b82f6", unit: "#8b5cf6", fast: "#a855f7", star: "#10b981" } },
+        reading: { title: "📚 Reading Progress", bg: "linear-gradient(135deg, rgba(251,191,36,0.3), rgba(245,158,11,0.3))", colors: { quiz: "#fbbf24", unit: "#f59e0b", fast: "#ea580c", star: "#10b981" } },
+        science: { title: "🔬 Science Progress", bg: "linear-gradient(135deg, rgba(16,185,129,0.3), rgba(6,182,212,0.3))", colors: { quiz: "#10b981", unit: "#06b6d4", fast: "#8b5cf6", star: "#f59e0b" } },
+    };
+    const cfg = config[subject];
+    const assessments = state.data[subject] || [];
+    const pts = calcSubjectPoints(assessments, subject);
+    const pct = Math.min((pts.total / pts.max) * 100, 100);
+    const pColor = getPointsColor(pts.total);
+
+    const quizzes = assessments.filter(a => a.assessment_type === "Quiz").sort((a, b) => new Date(a.date_given) - new Date(b.date_given));
+    const unitTests = assessments.filter(a => a.assessment_type === "Unit Test").sort((a, b) => new Date(a.date_given) - new Date(b.date_given));
+    const fastTests = assessments.filter(a => a.assessment_type === "FAST Progress Monitoring").sort((a, b) => new Date(a.date_given) - new Date(b.date_given));
+    const starTests = assessments.filter(a => a.assessment_type === "STAR").sort((a, b) => new Date(a.date_given) - new Date(b.date_given));
+
+    const container = document.getElementById("subjectScreen");
+    container.style.background = cfg.bg;
+
+    container.innerHTML = `
+        <!-- Back Button -->
+        <button class="btn btn-secondary" onclick="showDashboard()" style="margin-bottom:25px;">← Back to Dashboard</button>
+
+        <!-- Header -->
+        <div class="subject-header fade-in-down">
+            <h1 style="text-shadow:0 0 30px ${pColor}60;">${cfg.title}</h1>
+            <p style="font-size:17px;color:rgba(255,255,255,0.7);">Earn points with every assessment!</p>
+        </div>
+
+        <!-- Points Meter -->
+        <div class="points-meter fade-in-up">
+            <div class="header">
+                <div>
+                    <h2 style="font-size:26px;margin-bottom:6px;">🏆 Points Progress</h2>
+                    <p style="font-size:13px;color:rgba(255,255,255,0.7);">Earn points to reach 500!</p>
+                </div>
+                <div style="text-align:right;">
+                    <div class="total-points" style="color:${pColor};text-shadow:0 0 30px ${pColor};">${pts.total}</div>
+                    <div style="font-size:15px;color:rgba(255,255,255,0.6);">/ 500 points</div>
+                </div>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,${pColor},${pColor}cc);box-shadow:0 0 30px ${pColor};">
+                    ${pct > 10 ? Math.round(pct) + "%" : ""}
+                </div>
+            </div>
+            <div class="points-breakdown">
+                <div class="item" style="background:${cfg.colors.quiz}33;"><div class="label">📝 Quizzes</div><div class="value" style="color:${cfg.colors.quiz};">${pts.quizPts}</div></div>
+                <div class="item" style="background:${cfg.colors.unit}33;"><div class="label">📋 Unit Tests</div><div class="value" style="color:${cfg.colors.unit};">${pts.unitTestPts}</div></div>
+                <div class="item" style="background:${cfg.colors.fast}33;"><div class="label">🎯 FAST PM</div><div class="value" style="color:${cfg.colors.fast};">${pts.fastPmPts}</div></div>
+                <div class="item" style="background:${cfg.colors.star}33;"><div class="label">⭐ STAR</div><div class="value" style="color:${cfg.colors.star};">${pts.starPts}</div></div>
+            </div>
+            <div class="encouragement" style="color:${pColor};">${getEncouragement(pts.total)}</div>
+        </div>
+
+        <!-- Add Assessment Button -->
+        <div style="text-align:center;margin-bottom:25px;">
+            <button class="btn btn-primary" onclick="toggleAddForm('${subject}')" id="addFormToggleBtn">
+                ➕ Add New Assessment
+            </button>
+        </div>
+
+        <!-- Add Form (hidden by default) -->
+        <div class="add-form-container" id="addFormContainer" style="display:none;">
+            <h3 id="formTitle">➕ Add Assessment</h3>
+            <div class="form-row">
+                <label>Assessment Type</label>
+                <select id="formType" onchange="onTypeChange()">
+                    <option value="Quiz">Quiz</option>
+                    <option value="Unit Test">Unit Test</option>
+                    <option value="FAST Progress Monitoring">FAST Progress Monitoring</option>
+                    <option value="STAR">STAR</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label>Name / Description</label>
+                <input type="text" id="formName" placeholder="e.g. Chapter 5 Quiz">
+            </div>
+            <div class="form-row">
+                <label id="scoreLabel">Score</label>
+                <input type="number" id="formScore" placeholder="e.g. 85" min="0">
+            </div>
+            <div class="form-row" id="maxScoreRow">
+                <label>Max Score</label>
+                <input type="number" id="formMaxScore" value="100" min="1">
+            </div>
+            <div class="form-row">
+                <label>Date</label>
+                <input type="date" id="formDate">
+            </div>
+            <input type="hidden" id="formEditId" value="">
+            <input type="hidden" id="formSubject" value="">
+            <div class="form-actions">
+                <button class="btn btn-success" onclick="submitAssessment()">💾 Save</button>
+                <button class="btn btn-secondary" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Bar Charts -->
+        <div class="charts-grid">
+            ${renderBarChart(quizzes, "Quizzes", "📝", cfg.colors.quiz, false, pts.quizPts)}
+            ${renderBarChart(unitTests, "Unit Tests", "📋", cfg.colors.unit, false, pts.unitTestPts)}
+            ${renderBarChart(fastTests, "FAST PM", "🎯", cfg.colors.fast, true, pts.fastPmPts)}
+            ${renderBarChart(starTests, "STAR", "⭐", cfg.colors.star, true, pts.starPts)}
+        </div>
+
+        <!-- Grades Table -->
+        ${assessments.length > 0 ? renderGradesTable(assessments, subject) : ""}
+
+        <!-- Points Legend -->
+        <div class="points-legend">
+            <h3>📊 How Points Are Earned</h3>
+            <div class="grid">
+                <div class="item" style="background:rgba(245,158,11,0.2);"><div class="range" style="color:#f59e0b;">70-79%</div><div class="pts">+5 points</div></div>
+                <div class="item" style="background:rgba(251,191,36,0.2);"><div class="range" style="color:#fbbf24;">80-89%</div><div class="pts">+7 points</div></div>
+                <div class="item" style="background:rgba(34,197,94,0.2);"><div class="range" style="color:#22c55e;">90-99%</div><div class="pts">+9 points</div></div>
+                <div class="item" style="background:rgba(16,185,129,0.2);"><div class="range" style="color:#10b981;">100%</div><div class="pts">+15 points</div></div>
+            </div>
+            <p class="note">FAST PM & STAR tests earn bonus points for proficiency and growth!</p>
+        </div>
+
+        <!-- Save/Load -->
+        <div class="save-load-bar">
+            <button class="btn btn-success" onclick="saveToFile()">💾 Save Progress to File</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">← Back to Dashboard</button>
+        </div>
+    `;
+
+    // Set today's date as default
+    document.getElementById("formDate").value = new Date().toISOString().split("T")[0];
+    document.getElementById("formSubject").value = subject;
+}
+
+function renderBarChart(data, title, icon, color, isScale, pointsEarned) {
+    if (data.length === 0) {
+        return `<div class="chart-card" style="background:${color}15;border:2px solid ${color}40;">
+            <h3 style="color:${color};">${icon} ${title}</h3>
+            <div class="no-data">No assessments yet</div>
+        </div>`;
+    }
+    const maxBarH = 120;
+    const maxScore = isScale ? 999 : 100;
+    let barsHTML = "";
+    data.forEach((a, i) => {
+        const pct = isScale ? (a.score / maxScore) * 100 : (a.score / a.max_score) * 100;
+        const barH = Math.max((pct / 100) * maxBarH, 20);
+        const bColor = isScale ? color : getBarColor(pct);
+        const display = isScale ? a.score : Math.round(pct);
+        const shortName = (a.test_name || "").replace(/Quiz|Unit Test|FAST Progress Monitoring|STAR/gi, "").trim() || `#${i + 1}`;
+        const dateFmt = new Date(a.date_given).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        const ptsEarned = isScale ? "" : (calcPointsFromPercentage(pct) > 0 ? `<div class="pts">+${calcPointsFromPercentage(pct)}</div>` : "");
+        barsHTML += `<div class="chart-bar-item">
+            <div class="score-label" style="color:${bColor};text-shadow:0 0 10px ${bColor};">${display}${isScale ? "" : "%"}</div>
+            <div class="bar" style="height:${barH}px;background:linear-gradient(to top,${bColor}90,${bColor});box-shadow:0 0 15px ${bColor}50;">${ptsEarned}</div>
+            <div class="name-label">${shortName}</div>
+            <div class="date-label">${dateFmt}</div>
+        </div>`;
+    });
+    const avg = isScale ? "" : `<div><div class="stat-label">Avg</div><div class="stat-value" style="color:${color};">${Math.round(data.reduce((s, a) => s + (a.score / a.max_score * 100), 0) / data.length)}%</div></div>`;
+    return `<div class="chart-card" style="background:${color}15;border:2px solid ${color}40;">
+        <h3 style="color:${color};">${icon} ${title}</h3>
+        <div class="chart-bars">${barsHTML}</div>
+        <div class="chart-summary">
+            <div><div class="stat-label">Count</div><div class="stat-value" style="color:white;">${data.length}</div></div>
+            ${avg}
+            <div><div class="stat-label">Points</div><div class="stat-value" style="color:#fbbf24;">${pointsEarned}</div></div>
+        </div>
+    </div>`;
+}
+
+function renderGradesTable(assessments, subject) {
+    const sorted = [...assessments].sort((a, b) => new Date(b.date_given) - new Date(a.date_given));
+    let rows = "";
+    sorted.forEach(a => {
+        const isScale = a.assessment_type === "FAST Progress Monitoring" || a.assessment_type === "STAR";
+        const pct = isScale ? null : Math.round((a.score / a.max_score) * 100);
+        const pts = isScale ? calcFastPmPoints(a.score, subject) : calcPointsFromPercentage(pct);
+        const gColor = isScale ? (a.score >= 300 ? "#10b981" : "#3b82f6") : getBarColor(pct);
+        const gradeText = isScale ? (a.score >= 300 ? "Proficient" : "On Track") : `${pct}%`;
+        const dateFmt = new Date(a.date_given).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        rows += `<tr>
+            <td>${a.test_name || a.assessment_type}</td>
+            <td style="color:rgba(255,255,255,0.7);">${a.assessment_type}</td>
+            <td style="color:white;font-weight:600;">${a.score}${!isScale ? "/" + a.max_score : ""}</td>
+            <td><span class="grade-badge" style="background:${gColor}30;color:${gColor};">${gradeText}</span></td>
+            <td style="color:rgba(255,255,255,0.7);">${dateFmt}</td>
+            <td style="color:#10b981;font-weight:700;">+${pts}</td>
+            <td><div class="action-btns">
+                <button class="edit-btn" onclick='editAssessment("${subject}","${a.id}")'>✏️</button>
+                <button class="del-btn" onclick='deleteAssessment("${subject}","${a.id}")'>🗑️</button>
+            </div></td>
+        </tr>`;
+    });
+    return `<div class="grades-table-container">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:18px;text-align:center;">📋 All Grades Summary</h3>
+        <table class="grades-table">
+            <thead><tr><th style="text-align:left;">Assessment</th><th>Type</th><th>Score</th><th>Grade</th><th>Date</th><th>Points</th><th>Actions</th></tr></thead>
+            <tbody>${rows}</tbody>
+        </table>
+    </div>`;
+}
+
+// ========================
+// ADD / EDIT / DELETE
+// ========================
+let formVisible = false;
+
+function toggleAddForm(subject) {
+    formVisible = !formVisible;
+    document.getElementById("addFormContainer").style.display = formVisible ? "" : "none";
+    document.getElementById("addFormToggleBtn").textContent = formVisible ? "✖ Cancel" : "➕ Add New Assessment";
+    if (formVisible) {
+        document.getElementById("formTitle").textContent = "➕ Add Assessment";
+        document.getElementById("formEditId").value = "";
+        document.getElementById("formType").value = "Quiz";
+        document.getElementById("formName").value = "";
+        document.getElementById("formScore").value = "";
+        document.getElementById("formMaxScore").value = "100";
+        document.getElementById("formDate").value = new Date().toISOString().split("T")[0];
+        document.getElementById("formSubject").value = subject;
+        onTypeChange();
+    }
+}
+
+function onTypeChange() {
+    const type = document.getElementById("formType").value;
+    const isScale = type === "FAST Progress Monitoring" || type === "STAR";
+    document.getElementById("maxScoreRow").style.display = isScale ? "none" : "";
+    document.getElementById("scoreLabel").textContent = isScale ? "Scale Score" : "Score";
+    document.getElementById("formScore").placeholder = isScale ? "e.g. 510" : "e.g. 85";
+}
+
+function cancelForm() {
+    formVisible = false;
+    document.getElementById("addFormContainer").style.display = "none";
+    document.getElementById("addFormToggleBtn").textContent = "➕ Add New Assessment";
+}
+
+function submitAssessment() {
+    const subject = document.getElementById("formSubject").value;
+    const type = document.getElementById("formType").value;
+    const name = document.getElementById("formName").value.trim() || `${type} - ${document.getElementById("formDate").value}`;
+    const score = parseFloat(document.getElementById("formScore").value);
+    const isScale = type === "FAST Progress Monitoring" || type === "STAR";
+    const maxScore = isScale ? 999 : parseFloat(document.getElementById("formMaxScore").value);
+    const date = document.getElementById("formDate").value;
+    const editId = document.getElementById("formEditId").value;
+
+    if (isNaN(score) || score < 0) { showToast("Please enter a valid score", true); return; }
+    if (!isScale && (isNaN(maxScore) || maxScore <= 0)) { showToast("Please enter a valid max score", true); return; }
+    if (!date) { showToast("Please enter a date", true); return; }
+
+    if (editId) {
+        // Edit existing
+        state.data[subject] = state.data[subject].map(a =>
+            a.id === editId ? { ...a, assessment_type: type, test_name: name, score, max_score: maxScore, date_given: date, is_scale_score: isScale } : a
+        );
+    } else {
+        // Add new
+        state.data[subject].push({
+            id: Date.now() + "-" + Math.random().toString(36).substr(2, 9),
+            assessment_type: type,
+            test_name: name,
+            score,
+            max_score: maxScore,
+            date_given: date,
+            is_scale_score: isScale,
+        });
+    }
+
+    saveState();
+    cancelForm();
+    renderSubjectPage(subject);
+    showToast(editId ? "✅ Assessment updated!" : "✅ Assessment added!");
+}
+
+function editAssessment(subject, id) {
+    const a = state.data[subject].find(x => x.id === id);
+    if (!a) return;
+    formVisible = true;
+    document.getElementById("addFormContainer").style.display = "";
+    document.getElementById("addFormToggleBtn").textContent = "✖ Cancel";
+    document.getElementById("formTitle").textContent = "✏️ Edit Assessment";
+    document.getElementById("formEditId").value = a.id;
+    document.getElementById("formSubject").value = subject;
+    document.getElementById("formType").value = a.assessment_type;
+    document.getElementById("formName").value = a.test_name;
+    document.getElementById("formScore").value = a.score;
+    document.getElementById("formMaxScore").value = a.max_score;
+    document.getElementById("formDate").value = a.date_given;
+    onTypeChange();
+    document.getElementById("addFormContainer").scrollIntoView({ behavior: "smooth" });
+}
+
+function deleteAssessment(subject, id) {
+    if (!confirm("Are you sure you want to delete this assessment?")) return;
+    state.data[subject] = state.data[subject].filter(a => a.id !== id);
+    saveState();
+    renderSubjectPage(subject);
+    showToast("🗑️ Assessment deleted");
+}
+
+// ========================
+// INIT
+// ========================
+
+// Init — if name already saved, skip straight to dashboard
+(function init() {
+    try {
+        if (loadState() && state.student && state.student.firstName) {
+            showDashboard();
+        }
+    } catch (err) {
+        console.error("Init error:", err);
+    }
+})();
+</script>
+</body>
+</html>

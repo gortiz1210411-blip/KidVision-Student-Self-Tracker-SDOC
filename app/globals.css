@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------
+   KIDVISION FUTURISTIC THEME
+   ------------------------- */
+:root {
+  --kv-purple: #8b5cf6;
+  --kv-blue: #3b82f6;
+  --kv-cyan: #06b6d4;
+  --kv-pink: #ec4899;
+  --kv-text: #ffffff;
+  --kv-text-secondary: #e0e7ff;
+}
+
+/* -------------------------
+   GLOBAL BODY STYLES
+   ------------------------- */
+body {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #1e3a8a 50%, #0c4a6e 75%, #164e63 100%);
+  background-attachment: fixed;
+  color: var(--kv-text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Ensures links inherit color unless styled */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Better heading alignment and spacing */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Optional: Smooth transitions everywhere */
+* {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Ensure app layout does not collapse */
+html,
+body {
+  min-height: 100%;
+  font-size: 22px;
+}
+
+/* Scrollbar (optional, looks clean) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--kv-blue);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--kv-pink);
+}
+
+/* Progress Meter Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}

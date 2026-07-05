@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KidVision-Verse Main Page Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3e8ff 0%, #ffe3fa 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .glass-banner {
+      margin-top: 48px;
+      width: 95%;
+      max-width: 900px;
+      padding: 40px 0 28px 0;
+      border-radius: 36px;
+      background: rgba(255,255,255,0.45);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      backdrop-filter: blur(16px);
+      border: 2.5px solid;
+      border-image: linear-gradient(90deg, #0074D9, #FF00CC) 1;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .glass-banner h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #0074D9, #FF00CC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 14px 0;
+      letter-spacing: 2.5px;
+    }
+    .guardian-panel {
+      margin: 36px 0 20px 0;
+      width: 95%;
+      max-width: 750px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.32);
+      border-radius: 28px;
+      box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.10);
+      padding: 24px 36px;
+      gap: 32px;
+    }
+    .guardian-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0074D9 60%, #FF00CC 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      border: 3px solid #fff;
+    }
+    .guardian-info {
+      flex: 1;
+      color: #222;
+      font-size: 1.1rem;
+    }
+    .guardian-info h2 {
+      margin: 0 0 8px 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0074D9;
+      letter-spacing: 1px;
+    }
+    .guardian-info p {
+      margin: 4px 0;
+      font-size: 1.08rem;
+    }
+    .main-sections {
+      width: 95%;
+      max-width: 900px;
+      display: flex;
+      gap: 24px;
+      margin: 32px 0 0 0;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .section-box {
+      flex: 1 1 260px;
+      min-width: 260px;
+      background: rgba(255,255,255,0.32);
+      border-radius: 22px;
+      box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.08);
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      transition: box-shadow 0.2s;
+    }
+    .section-box h3 {
+      margin-top: 0;
+      color: #FF00CC;
+      font-size: 1.18rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+    .section-box ul {
+      padding-left: 18px;
+      margin: 10px 0 0 0;
+    }
+    .nav-bar {
+      width: 95%;
+      max-width: 900px;
+      margin: 22px 0 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .nav-link {
+      background: linear-gradient(90deg, #0074D9, #FF00CC);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 24px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.08rem;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+      border: none;
+      outline: none;
+    }
+    .nav-link:hover {
+      background: linear-gradient(90deg, #FF00CC, #0074D9);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .lore {
+      width: 95%;
+      max-width: 900px;
+      margin: 40px 0 0 0;
+      background: rgba(255,255,255,0.32);
+      border-radius: 22px;
+      box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.08);
+      padding: 28px 32px;
+      color: #222;
+      font-size: 1.18rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-banner">
+    <h1>Welcome to the KidVision-Verse Academy!</h1>
+    <div style="font-size:1.2rem;color:#333;">Embark on your adventure. Unlock your potential.</div>
+  </div>
+  <div class="guardian-panel">
+    <div class="guardian-avatar">
+      <img src="avatar-sample.png" alt="Student Avatar" style="width:80px;height:80px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,0.10);background:#fff;object-fit:cover;" />
+    </div>
+    <div class="guardian-info">
+      <h2>Welcome, Jordan!</h2>
+      <p>Points: <strong style="color:#FF00CC">1,250</strong> &nbsp; | &nbsp; Level: <strong style="color:#0074D9">7</strong></p>
+      <div style="margin:10px 0 6px 0;">
+        <span style="font-size:1.05rem;color:#555;">Progress:</span>
+        <div style="display:inline-block;width:160px;height:16px;background:rgba(0,0,0,0.08);border-radius:8px;vertical-align:middle;margin-left:8px;">
+          <div style="width:70%;height:100%;background:linear-gradient(90deg,#0074D9,#FF00CC);border-radius:8px;"></div>
+        </div>
+        <span style="font-size:0.98rem;color:#888;margin-left:8px;">70% to next level</span>
+      </div>
+      <p>Badges: <span style="font-size:1.2rem;">🏅 🌟 🎯</span></p>
+    </div>
+  </div>
+  <div class="main-sections">
+    <div class="section-box">
+      <h3>Assignments & Assessments</h3>
+      <ul>
+        <li>Math Quiz: Fractions <a href="#">[Take Now]</a></li>
+        <li>Science Project: Water Cycle <a href="#">[View Details]</a></li>
+        <li>Reading Log <a href="#">[Update]</a></li>
+      </ul>
+    </div>
+    <div class="section-box">
+      <h3>Habits & Observations</h3>
+      <ul>
+        <li>Daily Reading: <span style="color:#0074D9;">✔️</span></li>
+        <li>Participation: <span style="color:#FF00CC;">Good</span></li>
+        <li>Observation Notes <a href="#">[View]</a></li>
+      </ul>
+    </div>
+    <div class="section-box">
+      <h3>Growth Vault</h3>
+      <ul>
+        <li>FAST Score: <strong>82%</strong></li>
+        <li>STAR Score: <strong>76%</strong></li>
+        <li>Standards Mastered: <strong>15</strong></li>
+        <li><a href="#">View Progress Charts</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="lore">
+    <strong>Welcome to your KidVision Student Dashboard!</strong><br>
+    Here you can track your progress, complete assignments, and see your growth. Your Guardian and teachers are here to help you on your learning journey. Explore your achievements, check your habits, and keep leveling up!
+  </div>
+</body>
+</html>

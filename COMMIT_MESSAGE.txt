@@ -1,0 +1,4 @@
+Review-ready storage update:
+- remove third-party storage references from tracked docs and source
+- align repo guidance with OneDrive/local district storage
+- keep review branch focused on district-safe student data handling

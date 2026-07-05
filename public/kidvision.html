@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidVision Redirect</title>
+    <meta http-equiv="refresh" content="0; url=KidVision_Local_App_Windows_v13_vocab/index.html">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #09111f 0%, #10213d 55%, #19345f 100%);
+            color: #f8fafc;
+        }
+
+        .card {
+            width: min(560px, 100%);
+            padding: 32px;
+            border-radius: 24px;
+            background: rgba(15, 23, 42, 0.84);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 2rem;
+        }
+
+        p {
+            margin: 0 0 18px;
+            line-height: 1.55;
+            color: rgba(248, 250, 252, 0.82);
+        }
+
+        a {
+            color: #93c5fd;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <h1>Opening KidVision Quest</h1>
+        <p>This legacy shortcut now forwards to the current local KidVision build.</p>
+        <p>If your browser does not redirect automatically, use <a href="KidVision_Local_App_Windows_v13_vocab/index.html">this link</a>.</p>
+    </main>
+    <script>
+        window.location.replace("KidVision_Local_App_Windows_v13_vocab/index.html");
+    </script>
+</body>
+</html>

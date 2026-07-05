@@ -1,0 +1,2 @@
+-- Legacy SQL helper retained only for historical reference.
+-- Current district review flow keeps student data in OneDrive or local district-managed files.
