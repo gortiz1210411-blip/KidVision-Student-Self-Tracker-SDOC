@@ -80,7 +80,7 @@ export function validateRows<T extends z.ZodTypeAny>(
     if (parsed.success) {
       validRows.push(parsed.data);
     } else {
-      const errs = parsed.error.errors.map(
+      const errs = parsed.error.issues.map(
         (e) => `${e.path.join(".")}: ${e.message}`,
       );
       errors.push({ index: i, errors: errs });
