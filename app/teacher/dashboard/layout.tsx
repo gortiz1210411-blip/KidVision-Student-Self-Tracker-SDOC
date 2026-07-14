@@ -1,38 +1,42 @@
 export default function DashboardLayout({
+  children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <main
+    <div
       style={{
+        position: "relative",
         minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "24px",
-        background: "linear-gradient(135deg, #0f172a 0%, #10213d 55%, #19345f 100%)",
+        overflow: "hidden",
+        background: "#07172a",
       }}
     >
-      <section
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
         style={{
-          width: "min(640px, 100%)",
-          padding: "32px",
-          borderRadius: "24px",
-          background: "rgba(15, 23, 42, 0.88)",
-          border: "1px solid rgba(255,255,255,0.14)",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.3)",
-          color: "#f8fafc",
-          textAlign: "center",
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: 0.2,
         }}
       >
-        <p style={{ margin: "0 0 12px", fontSize: "14px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd" }}>
-          KidVision Student Review Build
-        </p>
-        <h1 style={{ margin: "0 0 12px", fontSize: "2rem" }}>Teacher Phase Pending</h1>
-        <p style={{ margin: 0, lineHeight: 1.6, color: "rgba(248,250,252,0.82)" }}>
-          Teacher tools are not part of this district review branch. This branch is limited to the student-facing experience and district-controlled storage flow.
-        </p>
-      </section>
-    </main>
+        <source src="/teacher-video-2.mp4" type="video/mp4" />
+      </video>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(145deg, rgba(4, 15, 30, 0.88), rgba(7, 29, 53, 0.82)), radial-gradient(circle at 15% 20%, rgba(41, 214, 255, 0.2), transparent 35%), radial-gradient(circle at 85% 65%, rgba(255, 197, 123, 0.2), transparent 35%)",
+        }}
+      />
+      <div style={{ position: "relative", zIndex: 1, padding: "24px" }}>{children}</div>
+    </div>
   );
 }
