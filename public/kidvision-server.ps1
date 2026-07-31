@@ -24,7 +24,7 @@ try {
         $ctx = $listener.GetContext()
         $path = [System.Uri]::UnescapeDataString($ctx.Request.Url.LocalPath.TrimStart('/'))
 
-        if (-not $path -or $path -eq 'kidvision.html') {
+        if (-not $path -or $path -eq 'kidvision.html' -or $path -eq 'kidclimbR.html') {
             $path = $defaultAppRelativePath
         } elseif ($path.EndsWith('/')) {
             $path = "$($path.TrimEnd('/'))/index.html"
