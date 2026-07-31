@@ -1,6 +1,6 @@
-# KidVision County Submission Checklist
+# kidclimbR County Submission Checklist
 
-Use this checklist when sharing KidVision for district review.
+Use this checklist when sharing kidclimbR for district review.
 
 ## Branch Readiness
 

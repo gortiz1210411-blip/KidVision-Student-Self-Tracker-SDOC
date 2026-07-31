@@ -69,7 +69,7 @@ export default function TeacherLogin() {
             color: "#c7ecff",
           }}
         >
-          KidVision Teacher Access
+          kidclimbR Teacher Access
         </p>
         <h1 style={{ margin: "10px 0 10px", fontSize: "2.1rem", lineHeight: 1.15 }}>
           Enter The Leadership Glass Room

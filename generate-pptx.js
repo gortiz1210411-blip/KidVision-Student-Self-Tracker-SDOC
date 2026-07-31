@@ -4,7 +4,7 @@ const fs = require("fs");
 const pptx = new pptxgen();
 pptx.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
 pptx.author = "Mr. Ortiz";
-pptx.title = "KidVision Student Dashboard";
+pptx.title = "kidclimbR Student Dashboard";
 
 // Color palette
 const DARK_BG = "0f0f23";
@@ -27,7 +27,7 @@ function darkSlide(pptx, opts = {}) {
 {
   const slide = darkSlide(pptx, { bg: "4c1d95" });
   slide.addText("🎓", { x: 0, y: 0.8, w: "100%", fontSize: 72, align: "center" });
-  slide.addText("KidVision Student Dashboard", {
+  slide.addText("kidclimbR Student Dashboard", {
     x: 0.5, y: 2.0, w: 12.33, fontSize: 44, bold: true, color: WHITE, align: "center",
     shadow: { type: "outer", blur: 10, color: "000000", offset: 3, angle: 270 }
   });
@@ -86,7 +86,7 @@ function darkSlide(pptx, opts = {}) {
 // ============= SLIDE 3: SOLUTION OVERVIEW =============
 {
   const slide = darkSlide(pptx);
-  slide.addText("💡 Our Solution: KidVision", {
+  slide.addText("💡 Our Solution: kidclimbR", {
     x: 0.5, y: 0.3, w: 12, fontSize: 36, bold: true, color: PURPLE
   });
   slide.addShape(pptx.ShapeType.line, { x: 0.5, y: 1.0, w: 12, line: { color: PURPLE, width: 2 } });
@@ -258,7 +258,7 @@ function darkSlide(pptx, opts = {}) {
   });
   slide.addShape(pptx.ShapeType.line, { x: 0.5, y: 1.0, w: 12, line: { color: PURPLE, width: 2 } });
 
-  slide.addText("KidVision runs 100% locally — no servers, no databases, no internet required.", {
+  slide.addText("kidclimbR runs 100% locally — no servers, no databases, no internet required.", {
     x: 0.5, y: 1.2, w: 12, fontSize: 18, color: LIGHT_TEXT
   });
 
@@ -425,7 +425,7 @@ function darkSlide(pptx, opts = {}) {
   slide.addText("🚀 Ready to Empower Our Students?", {
     x: 0.5, y: 0.8, w: 12, fontSize: 40, bold: true, color: WHITE, align: "center"
   });
-  slide.addText("KidVision transforms how students interact with their academic progress — using tools we already have, with zero compliance concerns.", {
+  slide.addText("kidclimbR transforms how students interact with their academic progress — using tools we already have, with zero compliance concerns.", {
     x: 1.5, y: 2.0, w: 10, fontSize: 20, color: "d1fae5", align: "center"
   });
 
@@ -477,7 +477,7 @@ function darkSlide(pptx, opts = {}) {
   slide.addShape(pptx.ShapeType.roundRect, {
     x: 3.5, y: 2.85, w: 6.5, h: 0.4, fill: { color: "0a0a1a" }, rectRadius: 0.05
   });
-  slide.addText("file:///C:/KidVision/kidvision.html", { x: 3.6, y: 2.85, w: 6.3, h: 0.4, fontSize: 16, color: GREEN, fontFace: "Consolas", bold: true, valign: "middle" });
+  slide.addText("file:///C:/kidclimbR/kidvision.html", { x: 3.6, y: 2.85, w: 6.3, h: 0.4, fontSize: 16, color: GREEN, fontFace: "Consolas", bold: true, valign: "middle" });
 
   // Step 2
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -485,7 +485,7 @@ function darkSlide(pptx, opts = {}) {
   });
   slide.addText("Step 2:", { x: 0.8, y: 3.95, w: 1.3, fontSize: 20, bold: true, color: YELLOW });
   slide.addText("Place ONE file on student computers", { x: 2.1, y: 3.95, w: 10, fontSize: 18, bold: true, color: WHITE });
-  slide.addText("Copy  kidvision.html  (55 KB) to  C:\\KidVision\\  on each student machine", {
+  slide.addText("Copy  kidvision.html  (55 KB) to  C:\\kidclimbR\\  on each student machine", {
     x: 0.8, y: 4.5, w: 11.4, fontSize: 15, color: LIGHT_TEXT
   });
 
@@ -514,7 +514,7 @@ function darkSlide(pptx, opts = {}) {
 }
 
 // Write file
-const outputPath = "c:\\Users\\visio\\OneDrive\\Desktop\\Developer Apps\\kidvision-student-app\\public\\KidVision-Presentation.pptx";
+const outputPath = "c:\\Users\\visio\\OneDrive\\Desktop\\Developer Apps\\kidvision-student-app\\public\\kidclimbR-Presentation.pptx";
 pptx.writeFile({ fileName: outputPath }).then(() => {
   console.log("✅ PowerPoint created: " + outputPath);
 }).catch(err => {

@@ -129,7 +129,7 @@ export default function StudentLogin() {
           }}>
             <img
               src="/logo.png"
-              alt="KidVision"
+              alt="kidclimbR"
               style={{ width: "220px", height: "auto", margin: "0 auto 20px", display: "block" }}
             />
             <p style={{

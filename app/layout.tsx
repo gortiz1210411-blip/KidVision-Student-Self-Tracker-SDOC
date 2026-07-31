@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KidVision Student Dashboard",
+  title: "kidclimbR Student Dashboard",
   description: "Student-facing progress dashboard for district review",
   icons: {
     icon: "/favicon.png",

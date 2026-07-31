@@ -1,6 +1,6 @@
 # Project Status
 
-KidVision includes a student-facing dashboard, local review bundle, and Microsoft 365 / OneDrive review path.
+kidclimbR includes a student-facing dashboard, local review bundle, and Microsoft 365 / OneDrive review path.
 
 ## Current Priority
 

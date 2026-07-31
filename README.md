@@ -1,6 +1,6 @@
-# KidVision Student Dashboard
+# kidclimbR Student Dashboard
 
-KidVision is a student-facing progress dashboard built for district review with student data remaining in district-controlled storage through OneDrive or local review files.
+kidclimbR is a student-facing progress dashboard built for district review with student data remaining in district-controlled storage through OneDrive or local review files.
 
 ## Current Storage Model
 
@@ -21,7 +21,7 @@ KidVision is a student-facing progress dashboard built for district review with 
 
 1. Install dependencies with `npm install`.
 2. Run the app with `npm run dev` for the Next.js experience.
-3. Use the local review bundle in `public/KidVision_Local_App_Windows_v13_vocab/` for district-style static review.
+3. Use the local review bundle in `public/kidclimbR_Local_App_Windows_v13_vocab/` for district-style static review.
 4. Follow `ONEDRIVE_SETUP.md` if you are connecting students to Microsoft 365 storage.
 
 ## District Review Notes

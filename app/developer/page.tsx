@@ -23,7 +23,7 @@ export default function DeveloperPageDisabled() {
         }}
       >
         <p style={{ margin: "0 0 12px", fontSize: "14px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#93c5fd" }}>
-          KidVision Review Build
+          kidclimbR Review Build
         </p>
         <h1 style={{ margin: "0 0 12px", fontSize: "2rem" }}>Developer Tools Disabled</h1>
         <p style={{ margin: 0, lineHeight: 1.6, color: "rgba(248,250,252,0.82)" }}>

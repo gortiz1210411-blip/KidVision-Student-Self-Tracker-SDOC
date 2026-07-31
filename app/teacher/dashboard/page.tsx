@@ -33,7 +33,7 @@ export default function TeacherDashboard() {
         }}
       >
         <p style={{ margin: 0, fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#b8ecff" }}>
-          KidVision Teacher Command Center
+          kidclimbR Teacher Command Center
         </p>
         <h1 style={{ margin: "10px 0", fontSize: "2rem" }}>Progress Intelligence Dashboard</h1>
         <p style={{ margin: 0, color: "rgba(248,250,252,0.9)", lineHeight: 1.55 }}>

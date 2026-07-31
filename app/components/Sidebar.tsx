@@ -43,7 +43,7 @@ export default function Sidebar() {
           backgroundClip: "text",
         }}
       >
-        🎓 KidVision
+        🎓 kidclimbR
       </h2>
 
       <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>

@@ -74,7 +74,7 @@ function MockLogin() {
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <img
           src="/logo.png"
-          alt="KidVision"
+          alt="kidclimbR"
           style={{ width: "140px", height: "auto", margin: "0 auto 10px", display: "block" }}
         />
         <div style={{ color: "white", fontSize: "18px", fontWeight: "600" }}>Welcome Back!</div>
@@ -479,7 +479,7 @@ export default function DemoPage() {
       }}>
         <img
           src="/logo.png"
-          alt="KidVision"
+          alt="kidclimbR"
           style={{ height: "32px", width: "auto" }}
         />
         <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px" }}>| Student Progress Tracker</span>

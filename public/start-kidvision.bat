@@ -1,13 +1,13 @@
 @echo off
-title KidVision Student App
+title kidclimbR Student App
 color 1F
 
-set "APP_ENTRY=KidVision_Local_App_Windows_v13_vocab\index.html"
+set "APP_ENTRY=kidclimbR_Local_App_Windows_v13_vocab\index.html"
 set "APP_URL=http://localhost:8765/%APP_ENTRY%"
 
 echo.
 echo   ========================================
-echo       KidVision Student App
+echo       kidclimbR Student App
 echo   ========================================
 echo.
 
@@ -42,22 +42,22 @@ echo   Starting local server...
 echo.
 
 :: Start the PowerShell server in a minimized window
-start /min "KidVision Server" powershell -ExecutionPolicy Bypass -NoProfile -File "%APPDIR%kidvision-server.ps1"
+start /min "kidclimbR Server" powershell -ExecutionPolicy Bypass -NoProfile -File "%APPDIR%kidvision-server.ps1"
 
 :: Wait for server to start
 timeout /t 3 /nobreak >nul
 
-:: Open KidVision in the default browser (Edge)
+:: Open kidclimbR in the default browser (Edge)
 start "" "%APP_URL%"
 
-echo   KidVision is running in your browser!
+echo   kidclimbR is running in your browser!
 echo.
 echo   If it didn't open automatically, open Edge
 echo   and go to: %APP_URL%
 echo.
 echo   ========================================
 echo      KEEP THIS WINDOW OPEN while students
-echo      are using KidVision.
+echo      are using kidclimbR.
 echo.
 echo      Press any key to STOP the server.
 echo   ========================================
@@ -67,6 +67,6 @@ pause >nul
 :: When teacher presses a key, kill the server
 echo.
 echo   Shutting down server...
-taskkill /fi "WINDOWTITLE eq KidVision Server*" /f >nul 2>nul
+taskkill /fi "WINDOWTITLE eq kidclimbR Server*" /f >nul 2>nul
 echo   Done! You can close this window.
 timeout /t 2 /nobreak >nul

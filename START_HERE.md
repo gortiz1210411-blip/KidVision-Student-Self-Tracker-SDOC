@@ -1,6 +1,6 @@
 # Start Here
 
-If you are evaluating or preparing KidVision for district review:
+If you are evaluating or preparing kidclimbR for district review:
 
 1. Read `README.md`.
 2. Read `ONEDRIVE_SETUP.md`.

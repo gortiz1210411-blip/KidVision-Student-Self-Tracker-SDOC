@@ -1,6 +1,6 @@
 # Deployment Guide
 
-KidVision should be deployed with district-controlled storage in mind.
+kidclimbR should be deployed with district-controlled storage in mind.
 
 ## Storage Architecture
 
@@ -24,7 +24,7 @@ Use the Next.js app when district hosting and Microsoft 365 integration are requ
 
 ### Option 2: Local review bundle
 
-Use the files in `public/KidVision_Local_App_Windows_v13_vocab/` with the local launcher scripts when the district wants a static local review experience.
+Use the files in `public/kidclimbR_Local_App_Windows_v13_vocab/` with the local launcher scripts when the district wants a static local review experience.
 
 ## OneDrive Setup
 

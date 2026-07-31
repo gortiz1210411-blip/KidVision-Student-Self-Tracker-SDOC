@@ -7,7 +7,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                 │
-│                  🎓 KidVision Student Dashboard               │
+│                  🎓 kidclimbR Student Dashboard               │
 │        Manage student assessments, track progress, and        │
 │              organize data efficiently                         │
 │                                                                 │
@@ -56,7 +56,7 @@
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
-│     KidVision © 2024 — Student Assessment Dashboard            │
+│     kidclimbR © 2024 — Student Assessment Dashboard            │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -68,7 +68,7 @@
 ┌──────────────────────────────────────────────────────────────────────┐
 │
 │ ┌─────────────────┐  ┌──────────────────────────────────────────┐
-│ │  🎓 KidVision   │  │      Teacher Dashboard                  │
+│ │  🎓 kidclimbR   │  │      Teacher Dashboard                  │
 │ ├─────────────────┤  │  Welcome to your assessment dashboard   │
 │ │ 📊 Dashboard    │  │                                         │
 │ ├─────────────────┤  │  Quick Links:                           │
@@ -106,7 +106,7 @@ Sidebar Features:
 ┌──────────────────────────────────────────────────────────────────────┐
 │
 │ ┌─────────────────┐  ┌──────────────────────────────────────────┐
-│ │  🎓 KidVision   │  │      Math Assessments                   │
+│ │  🎓 kidclimbR   │  │      Math Assessments                   │
 │ ├─────────────────┤  │                                         │
 │ │ 📊 Dashboard    │  │  ┌──────────────────────────────────┐ │
 │ │ Assessments     │  │  │ Assessment Type │ Score │ Level │ │
@@ -132,7 +132,7 @@ Sidebar Features:
 ┌──────────────────────────────────────────────────────────────────────┐
 │
 │ ┌─────────────────┐  ┌──────────────────────────────────────────┐
-│ │  🎓 KidVision   │  │      Upload Math Assessment Data        │
+│ │  🎓 kidclimbR   │  │      Upload Math Assessment Data        │
 │ ├─────────────────┤  │                                         │
 │ │ 📊 Dashboard    │  │  Assessment Type:                       │
 │ │ Assessments     │  │  [FAST Math ▼]                          │
@@ -236,7 +236,7 @@ Mobile (<768px):
 ## Key Features Visible to Users
 
 1. **Professional Branding**
-   - KidVision logo/name
+   - kidclimbR logo/name
    - Consistent color scheme
    - Polished UI with shadows and spacing
 

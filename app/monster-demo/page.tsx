@@ -906,7 +906,7 @@ export default function MonsterDemo() {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <h1 style={{ fontSize: "36px", fontWeight: "700", color: "white", marginBottom: "8px" }}>
-            👹 KidVision Monsters
+            👹 kidclimbR Monsters
           </h1>
           <p style={{ color: "rgba(255,255,255,0.6)" }}>
             Monsters Inc style - Arms, legs & personality!

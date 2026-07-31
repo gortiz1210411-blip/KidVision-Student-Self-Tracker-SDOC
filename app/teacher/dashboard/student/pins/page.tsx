@@ -234,7 +234,7 @@ export default function StudentPinsPage() {
 
         <div style={{ padding: "40px", fontFamily: "Arial, sans-serif" }}>
           <h1 style={{ fontSize: "36px", fontWeight: "bold", color: "#000", marginBottom: "10px", textAlign: "center" }}>
-            KidVision Student Login Credentials
+            kidclimbR Student Login Credentials
           </h1>
           <p style={{ fontSize: "16px", color: "#666", marginBottom: "40px", textAlign: "center" }}>
             Printed: {new Date().toLocaleDateString()}

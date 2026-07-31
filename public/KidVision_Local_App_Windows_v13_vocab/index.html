@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KidVision Local App v10</title>
+<title>kidclimbR Local App v10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
@@ -601,11 +601,11 @@ textarea { min-height:110px; resize:vertical; }
   <div class="intro-overlay">
     <div id="glassWindow" class="glass-window">
       <div class="pill" style="display:inline-flex; margin-bottom:10px; background:linear-gradient(90deg, rgba(255,75,75,.18), rgba(77,124,255,.18)); color:#fff;">System Entry</div>
-      <h1 class="kv-title">KidVision</h1>
+      <h1 class="kv-title">kidclimbR</h1>
       <p id="introLine" class="kv-sub">Every journey begins somewhere.</p>
       <p class="kv-small">Track your growth. Build your path. Level up your guardian.</p>
       <div class="intro-actions">
-        <button id="startJourneyBtn" class="start-btn" onclick="enterKidVision()" style="display:none;">Start Journey</button>
+        <button id="startJourneyBtn" class="start-btn" onclick="enterkidclimbR()" style="display:none;">Start Journey</button>
         <button class="secondary skip-link" onclick="skipIntro()">Skip Intro</button>
       </div>
     </div>
@@ -614,7 +614,7 @@ textarea { min-height:110px; resize:vertical; }
 
 <div class="shell">
   <div id="topNav" class="topnav">
-    <div class="brand"><div>KidVision</div></div>
+    <div class="brand"><div>kidclimbR</div></div>
     <div class="nav-buttons">
       <button id="btnMath" class="secondary" onclick="showPage('math')">&#128202; Math</button>
       <button id="btnReading" class="secondary" onclick="showPage('reading')">&#128218; Reading</button>
@@ -629,7 +629,7 @@ textarea { min-height:110px; resize:vertical; }
     <section class="welcome-layout">
       <div class="panel welcome-card">
         <div class="pill" style="display:inline-flex;">Student Entry Portal</div>
-        <h1 class="welcome-title">Welcome to KidVision Quest</h1>
+        <h1 class="welcome-title">Welcome to kidclimbR Quest</h1>
         <p class="welcome-sub">Begin The Gate of Becoming. Your answers in the story will determine your element avatar path.</p>
 
         <div class="welcome-grid">
@@ -2018,7 +2018,7 @@ function applyData() {
     "Applied data for <strong>" + latest.name + "</strong>.<br>" +
     "Unit Test Points: <strong>" + latest.totals.unit + "</strong> • Quiz Points: <strong>" + latest.totals.quiz +
     "</strong> • FAST Level Bonus: <strong>" + latest.totals.fastLevels + "</strong> • FAST Growth Bonus: <strong>" + latest.totals.fastGrowth +
-    "</strong><br>Total KidVision Points: <strong>" + latest.totals.total + "</strong>";
+    "</strong><br>Total kidclimbR Points: <strong>" + latest.totals.total + "</strong>";
   updateDashboard();
   showPage('math');
 }
@@ -2174,14 +2174,14 @@ function setupIntro(){
   setTimeout(()=> btn.style.display = "inline-block", 8600);
 }
 
-function enterKidVision(){
+function enterkidclimbR(){
   // Intro intentionally plays every time.
   document.getElementById("introScreen").style.display = "none";
   showPage('welcome');
 }
 
 function skipIntro(){
-  enterKidVision();
+  enterkidclimbR();
 }
 
 setupIntro();

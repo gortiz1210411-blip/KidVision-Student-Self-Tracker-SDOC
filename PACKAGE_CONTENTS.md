@@ -2,7 +2,7 @@
 
 This repository contains:
 
-- The Next.js KidVision application
+- The Next.js kidclimbR application
 - OneDrive/local-storage review documentation
 - Local review bundle launch scripts
 - Static student-facing review assets

@@ -1,6 +1,6 @@
 # OneDrive Integration Setup Guide
 
-This guide helps you set up KidVision so students can access their personal assessment files from your OneDrive.
+This guide helps you set up kidclimbR so students can access their personal assessment files from your OneDrive.
 
 ## How It Works
 1. **Teacher** creates individual JSON files for each student in their OneDrive
@@ -39,7 +39,7 @@ Send this to your IT admin:
 2. Navigate to **Azure Active Directory** → **App registrations**
 3. Click **New registration**
 4. Fill in:
-   - **Name**: `KidVision Student App`
+   - **Name**: `kidclimbR Student App`
    - **Supported account types**: "Accounts in this organizational directory only"
    - **Redirect URI**: Select "Single-page application (SPA)" and enter `http://localhost:3000`
 5. Click **Register**
@@ -56,7 +56,7 @@ Send this to your IT admin:
 
 ---
 
-## Step 2: Configure KidVision
+## Step 2: Configure kidclimbR
 
 Open `hooks/useStudentOneDrive.ts` and update the configuration at the top:
 

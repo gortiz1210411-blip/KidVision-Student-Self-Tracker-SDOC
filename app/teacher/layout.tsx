@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Teacher Phase Pending | KidVision",
+  title: "Teacher Phase Pending | kidclimbR",
   description: "Teacher tools are not part of the current district review build.",
   icons: {
     icon: "/favicon.png",

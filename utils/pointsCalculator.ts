@@ -1,5 +1,5 @@
 /**
- * KidVision Points Calculator
+ * kidclimbR Points Calculator
  * 
  * Point System (out of 500 total points for the year):
  * 

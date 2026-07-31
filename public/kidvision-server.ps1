@@ -1,10 +1,10 @@
-# KidVision Local Server
+# kidclimbR Local Server
 # This script starts a tiny HTTP server so Edge can run JavaScript.
-# Do NOT close this window while students are using KidVision.
+# Do NOT close this window while students are using kidclimbR.
 
 $port = 8765
 $dir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$defaultAppRelativePath = "KidVision_Local_App_Windows_v13_vocab/index.html"
+$defaultAppRelativePath = "kidclimbR_Local_App_Windows_v13_vocab/index.html"
 $defaultAppPath = Join-Path $dir $defaultAppRelativePath
 
 if (-not (Test-Path $defaultAppPath)) {
@@ -17,7 +17,7 @@ try {
     $listener = [System.Net.HttpListener]::new()
     $listener.Prefixes.Add("http://localhost:$port/")
     $listener.Start()
-    Write-Host "KidVision server running on http://localhost:$port/" -ForegroundColor Green
+    Write-Host "kidclimbR server running on http://localhost:$port/" -ForegroundColor Green
     Write-Host "Do not close this window." -ForegroundColor Yellow
     
     while ($true) {

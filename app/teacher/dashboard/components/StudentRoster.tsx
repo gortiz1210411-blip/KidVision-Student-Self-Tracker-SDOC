@@ -178,7 +178,7 @@ export default function StudentRoster() {
                   Class: {s.class_code}
                 </div>
 
-                {/* KidVision ID */}
+                {/* kidclimbR ID */}
                 <div style={{
                   marginTop: "12px",
                   fontSize: "14px",
@@ -188,7 +188,7 @@ export default function StudentRoster() {
                     fontWeight: "600",
                     color: "#f9a8d4",
                   }}>
-                    KidVision ID:
+                    kidclimbR ID:
                   </span>{" "}
                   {s.kidvision_id ?? "—"}
                 </div>
