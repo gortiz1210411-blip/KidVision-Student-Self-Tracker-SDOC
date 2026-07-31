@@ -128,7 +128,7 @@ export default function StudentLogin() {
             marginBottom: "40px",
           }}>
             <img
-              src="/logo.png"
+              src="/kidclimbR_LOGO.png"
               alt="kidclimbR"
               style={{ width: "220px", height: "auto", margin: "0 auto 20px", display: "block" }}
             />

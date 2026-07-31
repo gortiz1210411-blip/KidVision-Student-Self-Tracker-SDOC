@@ -73,7 +73,7 @@ function MockLogin() {
     }}>
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <img
-          src="/logo.png"
+          src="/kidclimbR_LOGO.png"
           alt="kidclimbR"
           style={{ width: "140px", height: "auto", margin: "0 auto 10px", display: "block" }}
         />
@@ -478,7 +478,7 @@ export default function DemoPage() {
         zIndex: 50,
       }}>
         <img
-          src="/logo.png"
+          src="/kidclimbR_LOGO.png"
           alt="kidclimbR"
           style={{ height: "32px", width: "auto" }}
         />
